@@ -1,12 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 
-function Search( {pokemon, setPokemon} ) {
-  const [search, setSearch] = useState("")
-
+function Search( {search, setSearch} ) {
+  
   function handleSearch(e) {
     setSearch(e.target.value)
-    const searchedPokemon = pokemon.filter(poke => poke.name.includes(search))
-    setPokemon(searchedPokemon)
   }
 
   return (

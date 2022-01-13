@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { Card } from "semantic-ui-react";
 
-function PokemonCard( {pokemon} ) {
+function PokemonCard( {pokemon, key} ) {
   const { hp, name, sprites } = pokemon
   const [sprite, setSprite] = useState(true)
 
