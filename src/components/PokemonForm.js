@@ -2,23 +2,26 @@ import React, {useState} from "react";
 import { Form } from "semantic-ui-react";
 
 function PokemonForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    hp: "",
-    sprites: {
-      front: "",
-      back: "",
-    }
-  })
+  const [pokeName, setPokeName] = useState("")
+  const [pokeHp, setPokeHp] = useState("")
+  const [pokeFrontSprite, setPokeFrontSprite] = useState("")
+  const [pokeBackSprite, setPokeBackSprite] = useState("")
 
-  function handleChange(event) {
-    const name = event.target.name
-    const value = event.target.value
-    setFormData({
-      ...formData,
-      [name]: value
+  function handleSubmit() {
+    const newPokemon = {
+      id: "",
+      name: pokeName,
+      hp: parseInt(pokeHp),
+      sprites: {
+        front: pokeFrontSprite,
+        back: pokeBackSprite
+      }
+    }
+    fetch("http://localhost:3001/pokemon", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newPokemon)
     })
-    console.log(formData)
   }
 
 
@@ -26,9 +29,7 @@ function PokemonForm() {
     <div>
       <h3>Add a Pokemon!</h3>
       <Form
-        onSubmit={() => {
-          console.log("submitting form...");
-        }}
+        onSubmit={handleSubmit}
       >
         <Form.Group widths="equal">
           <Form.Input 
@@ -36,32 +37,32 @@ function PokemonForm() {
             label="Name" 
             placeholder="Name" 
             name="name" 
-            value={formData.name}
-            onChange={handleChange}
+            value={pokeName}
+            onChange={(e) => setPokeName(e.target.value)}
           />
           <Form.Input 
             fluid 
             label="hp" 
             placeholder="hp" 
             name="hp" 
-            value={formData.hp}
-            onChange={handleChange}
+            value={pokeHp}
+            onChange={(e) => setPokeHp(e.target.value)}
           />
           <Form.Input
             fluid
             label="Front Image URL"
             placeholder="url"
             name="frontUrl"
-            value={formData.sprites.front}
-            onChange={handleChange}
+            value={pokeFrontSprite}
+            onChange={(e) => setPokeFrontSprite(e.target.value)}
           />
           <Form.Input
             fluid
             label="Back Image URL"
             placeholder="url"
             name="backUrl"
-            value={formData.sprites.back}
-            onChange={handleChange}
+            value={pokeBackSprite}
+            onChange={(e) => setPokeBackSprite(e.target.value)}
           />
         </Form.Group>
         <Form.Button>Submit</Form.Button>
